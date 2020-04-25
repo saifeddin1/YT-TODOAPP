@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo App</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}">
+    <link rel="stylesheet" type="text/css" href=""> 
+</head>
+<body>
+
+<div id="container">
+    <h1>My TODO App </h1>
+    <form action="." method="post">
+        {% csrf_token %}
+    <div class="task">
+    
+     {{ task_form.name }}
+     <input type="submit" value="Add">
+     </div>
+    </form>
+    <div class="btn-group">
+    <a href="{% url 'delete_completed' %}"><button type="">Delete Completed</button></a>
+    <a href="{% url 'delete_all' %}"><button type="">Delete All</button></a>
+    </div>
+    <ul>
+     {% for task in all_tasks %}
+         {% if task.completed %}
+             
+        <li id="completed">{{ task.name }}</li>
+        {% else %}
+        <a href="{% url 'complete' task.id %}"><li id="not-completed">{{ task.name }}</li></a>
+         {% endif %}
+     {% endfor %}
+
+    </ul>
+</div>
+</body>
+</html>
