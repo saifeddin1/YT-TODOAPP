@@ -1,0 +1,35 @@
+{% extends 'todo/base.html' %}
+{% load static %}
+{% block content %}
+
+    <a href="{% url 'logout' %}">Logout</a>
+    <div id="container">
+        
+         <h1 id="todo-header">My TODO App </h1>
+    <form action="." method="post">
+        {% csrf_token %}
+        <div class="task">
+            
+            {{ task_form.name }}
+            <input type="submit" value="Add">
+        </div>
+    </form>
+    <div class="btn-group">
+        <a href="{% url 'delete_completed' %}"><button type="">Delete Completed</button></a>
+        <a href="{% url 'delete_all' %}"><button type="">Delete All</button></a>
+    </div>
+    <ul>
+        {% for task in all_tasks %}
+            {% if task.completed %}
+                
+                <li id="completed">{{ task.name }}</li>
+            {% else %}
+                <a href="{% url 'complete' task.id %}"><li id="not-completed">{{ task.name }}</li></a>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    </div>
+   
+
+{% endblock content %}
